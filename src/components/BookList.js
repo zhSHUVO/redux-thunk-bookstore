@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import fetchBooksData from "../redux/thunk/fetchBooks";
+import fetchBooksReq from "../redux/thunk/fetchBooksReq";
 import BookCard from "./BookCard";
 
 const BookList = () => {
@@ -8,7 +8,7 @@ const BookList = () => {
     const books = useSelector((state) => state);
 
     useEffect(() => {
-        dispatch(fetchBooksData);
+        dispatch(fetchBooksReq);
     }, [dispatch]);
     return (
         <div>

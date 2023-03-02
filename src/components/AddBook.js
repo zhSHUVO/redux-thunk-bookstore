@@ -1,6 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { v4 as uuid } from "uuid";
+import addBookReq from "../redux/thunk/addBookReq";
 
 const AddBook = () => {
+    const dispatch = useDispatch();
+    const [book, setBook] = useState();
+
+    const submitBook = (event) => {
+        setBook({
+            ...book,
+            [event.target.name]: event.target.value,
+        });
+    };
+
+    const submit = (event) => {
+        event.preventDefault();
+        const uniqeId = { id: uuid() };
+        const featured = { featured: false };
+        const addBookInfo = Object.assign(uniqeId, featured, book);
+        console.log("added", addBookInfo);
+        dispatch(addBookReq(addBookInfo));
+        event.target.reset();
+    };
+
     return (
         <div>
             <div>
@@ -8,10 +31,11 @@ const AddBook = () => {
                     <h4 className="mb-8 text-xl font-bold text-center">
                         Add New Book
                     </h4>
-                    <form className="book-form">
+                    <form onSubmit={submit} className="book-form">
                         <div className="space-y-2">
                             <label htmlFor="name">Book Name</label>
                             <input
+                                onChange={submitBook}
                                 required
                                 className="text-input"
                                 type="text"
@@ -23,6 +47,7 @@ const AddBook = () => {
                         <div className="space-y-2">
                             <label htmlFor="category">Author</label>
                             <input
+                                onChange={submitBook}
                                 required
                                 className="text-input"
                                 type="text"
@@ -34,6 +59,7 @@ const AddBook = () => {
                         <div className="space-y-2">
                             <label htmlFor="image">Image Url</label>
                             <input
+                                onChange={submitBook}
                                 required
                                 className="text-input"
                                 type="text"
@@ -46,6 +72,7 @@ const AddBook = () => {
                             <div className="space-y-2">
                                 <label htmlFor="price">Price</label>
                                 <input
+                                    onChange={submitBook}
                                     required
                                     className="text-input"
                                     type="number"
@@ -57,6 +84,7 @@ const AddBook = () => {
                             <div className="space-y-2">
                                 <label htmlFor="quantity">Rating</label>
                                 <input
+                                    onChange={submitBook}
                                     required
                                     className="text-input"
                                     type="number"
@@ -70,6 +98,9 @@ const AddBook = () => {
 
                         <div className="flex items-center">
                             <input
+                                onChange={(e) =>
+                                    (book.featured = e.target.checked)
+                                }
                                 id="input-Bookfeatured"
                                 type="checkbox"
                                 name="featured"
