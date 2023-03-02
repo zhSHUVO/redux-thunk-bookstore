@@ -1,6 +1,12 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import deleteBookReq from "../redux/thunk/deleteBookReq";
 
 const BookCard = ({ book }) => {
+    const dispatch = useDispatch();
+    const handleDelete = (id) => {
+        dispatch(deleteBookReq(id));
+    };
     return (
         <div>
             <div className="book-card">
@@ -32,7 +38,10 @@ const BookCard = ({ book }) => {
                                     />
                                 </svg>
                             </button>
-                            <button className="lws-delete">
+                            <button
+                                className="lws-delete"
+                                onClick={() => handleDelete(book.id)}
+                            >
                                 <svg
                                     fill="none"
                                     viewBox="0 0 24 24"

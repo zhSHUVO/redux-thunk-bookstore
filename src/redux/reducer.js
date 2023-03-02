@@ -1,4 +1,4 @@
-import { ADDBOOK, FETCHBOOKS } from "./actionTypes";
+import { ADDBOOK, DELETEBOOK, FETCHBOOKS } from "./actionTypes";
 
 const initialState = [];
 
@@ -9,6 +9,9 @@ const bookReducer = (state = initialState, action) => {
 
         case ADDBOOK:
             return [...state, action.payload];
+
+        case DELETEBOOK:
+            return state.filter((book) => book.id !== action.payload);
 
         default:
             return state;
