@@ -1,7 +1,15 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import logo from "../image/logo.svg";
+import { search } from "../redux/filter/actions";
 
 const Nav = () => {
+    const dispatch = useDispatch();
+
+    const changeHandler = (e) => {
+        dispatch(search(e.target.value));
+        // console.log(e.target.value);
+    };
     return (
         <div>
             <nav className="py-4 2xl:px-6">
@@ -36,6 +44,7 @@ const Nav = () => {
                                 ></path>
                             </svg>
                             <input
+                                onChange={(e) => changeHandler(e)}
                                 type="text"
                                 placeholder="Filter books..."
                                 className="search"

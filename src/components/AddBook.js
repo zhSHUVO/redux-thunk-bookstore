@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { v4 as uuid } from "uuid";
-import addBookReq from "../redux/thunk/addBookReq";
+import addBookReq from "../redux/book/thunk/addBookReq";
 
 const AddBook = () => {
     const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const AddBook = () => {
         const uniqeId = { id: uuid() };
         const featured = { featured: false };
         const addBookInfo = Object.assign(uniqeId, featured, book);
-        console.log("added", addBookInfo);
+        // console.log("added", addBookInfo);
         dispatch(addBookReq(addBookInfo));
         event.target.reset();
     };

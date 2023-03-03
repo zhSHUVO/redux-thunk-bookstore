@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import fetchBooksReq from "../redux/thunk/fetchBooksReq";
+import fetchBooksReq from "../redux/book/thunk/fetchBooksReq";
 import BookCard from "./BookCard";
 
 const BookList = () => {
     const dispatch = useDispatch();
-    const books = useSelector((state) => state);
+    const books = useSelector((state) => state.books);
+    const filters = useSelector((state) => state.filters);
 
     useEffect(() => {
         dispatch(fetchBooksReq);
@@ -29,9 +30,19 @@ const BookList = () => {
                     </div>
                 </div>
                 <div className="lws-bookContainer">
-                    {books.map((book) => (
-                        <BookCard key={book.id} book={book}></BookCard>
-                    ))}
+                    {books
+                        .filter((book) =>
+                            filters.searchTerm
+                                ? book.name
+                                      .toLowerCase()
+                                      .includes(
+                                          filters.searchTerm.toLowerCase()
+                                      )
+                                : book
+                        )
+                        .map((book) => (
+                            <BookCard key={book.id} book={book}></BookCard>
+                        ))}
                 </div>
             </div>
         </div>
