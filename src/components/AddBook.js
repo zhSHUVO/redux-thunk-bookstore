@@ -10,8 +10,18 @@ const AddBook = () => {
 
     const updateBook = useSelector((state) => state.update.book);
 
+    // checking checkbox status
+    const [featuredstatus, setFeaturedstatus] = useState(false);
+    const handleChange = (event) => {
+        if (event.target.checked) {
+            setFeaturedstatus(true);
+        }
+    };
+
+    // passing checkout status to bookinfo
+    let featured = { featured: featuredstatus };
+
     const submitBook = (event) => {
-        console.log(event);
         setBook({
             ...book,
             [event.target.name]: event.target.value,
@@ -19,16 +29,16 @@ const AddBook = () => {
     };
     const submit = (event) => {
         event.preventDefault();
-        const featured = { featured: false };
         const addBookInfo = Object.assign(featured, book);
+        console.log(addBookInfo);
         if (updateBook) {
-            dispatch(updateBookReq(book, updateBook.id));
+            dispatch(updateBookReq(addBookInfo, updateBook.id));
             dispatch(removeState());
             document.getElementById("submit").innerHTML = "Add Book";
         } else {
             dispatch(addBookReq(addBookInfo));
         }
-
+        setFeaturedstatus(false);
         event.target.reset();
     };
 
@@ -120,9 +130,7 @@ const AddBook = () => {
                                 defaultChecked={
                                     updateBook && updateBook.featured
                                 }
-                                onChange={(e) =>
-                                    (book.featured = e.target.checked)
-                                }
+                                onChange={handleChange}
                                 id="input-Bookfeatured"
                                 type="checkbox"
                                 name="featured"
