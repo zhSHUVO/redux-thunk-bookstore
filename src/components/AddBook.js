@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { v4 as uuid } from "uuid";
 import addBookReq from "../redux/book/thunk/addBookReq";
 import updateBookReq from "../redux/book/thunk/updateBookReq";
 
@@ -10,7 +9,6 @@ const AddBook = () => {
 
     const updateBook = useSelector((state) => state.update.book);
     if (updateBook) {
-        // console.log("update");
         document.getElementById("submit").innerHTML = "Update";
     }
 
@@ -22,12 +20,10 @@ const AddBook = () => {
     };
     const submit = (event) => {
         event.preventDefault();
-        const uniqeId = { id: uuid() };
         const featured = { featured: false };
         const addBookInfo = Object.assign(featured, book);
         if (updateBook) {
             dispatch(updateBookReq(book, updateBook.id));
-            console.log(book, updateBook.id);
         } else {
             dispatch(addBookReq(addBookInfo));
         }

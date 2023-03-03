@@ -1,7 +1,6 @@
-import { update } from "../../update/actions";
+import { updated } from "../action";
 
 const updateBookReq = (book, bookId) => {
-    // console.log(book);
     return async (dispatch) => {
         const res = await fetch(`http://localhost:9000/books/${bookId}`, {
             method: "PATCH",
@@ -12,9 +11,8 @@ const updateBookReq = (book, bookId) => {
         });
 
         const updatedBook = await res.json();
-        console.log(updatedBook);
 
-        dispatch(update(updatedBook));
+        dispatch(updated(updatedBook));
     };
 };
 

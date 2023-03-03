@@ -9,7 +9,6 @@ const BookCard = ({ book }) => {
         dispatch(deleteBookReq(id));
     };
     const handleUpdate = (book) => {
-        // console.log(book.id);
         dispatch(update(book));
     };
     return (

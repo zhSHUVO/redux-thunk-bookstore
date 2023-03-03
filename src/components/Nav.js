@@ -8,7 +8,6 @@ const Nav = () => {
 
     const changeHandler = (e) => {
         dispatch(search(e.target.value));
-        // console.log(e.target.value);
     };
     return (
         <div>
