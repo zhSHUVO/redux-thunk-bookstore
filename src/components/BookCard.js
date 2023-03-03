@@ -1,11 +1,16 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import deleteBookReq from "../redux/book/thunk/deleteBookReq";
+import { update } from "../redux/update/actions";
 
 const BookCard = ({ book }) => {
     const dispatch = useDispatch();
     const handleDelete = (id) => {
         dispatch(deleteBookReq(id));
+    };
+    const handleUpdate = (book) => {
+        // console.log(book.id);
+        dispatch(update(book));
     };
     return (
         <div>
@@ -23,7 +28,10 @@ const BookCard = ({ book }) => {
                             </span>
                         )}
                         <div className="text-gray-500 space-x-2">
-                            <button className="lws-edit">
+                            <button
+                                onClick={() => handleUpdate(book)}
+                                className="lws-edit"
+                            >
                                 <svg
                                     fill="none"
                                     viewBox="0 0 24 24"

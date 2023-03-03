@@ -1,11 +1,18 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
 import addBookReq from "../redux/book/thunk/addBookReq";
+import updateBookReq from "../redux/book/thunk/updateBookReq";
 
 const AddBook = () => {
     const dispatch = useDispatch();
     const [book, setBook] = useState();
+
+    const updateBook = useSelector((state) => state.update.book);
+    if (updateBook) {
+        // console.log("update");
+        document.getElementById("submit").innerHTML = "Update";
+    }
 
     const submitBook = (event) => {
         setBook({
@@ -13,14 +20,18 @@ const AddBook = () => {
             [event.target.name]: event.target.value,
         });
     };
-
     const submit = (event) => {
         event.preventDefault();
         const uniqeId = { id: uuid() };
         const featured = { featured: false };
-        const addBookInfo = Object.assign(uniqeId, featured, book);
-        // console.log("added", addBookInfo);
-        dispatch(addBookReq(addBookInfo));
+        const addBookInfo = Object.assign(featured, book);
+        if (updateBook) {
+            dispatch(updateBookReq(book, updateBook.id));
+            console.log(book, updateBook.id);
+        } else {
+            dispatch(addBookReq(addBookInfo));
+        }
+
         event.target.reset();
     };
 
@@ -35,6 +46,7 @@ const AddBook = () => {
                         <div className="space-y-2">
                             <label htmlFor="name">Book Name</label>
                             <input
+                                defaultValue={updateBook && updateBook.name}
                                 onChange={submitBook}
                                 required
                                 className="text-input"
@@ -47,6 +59,7 @@ const AddBook = () => {
                         <div className="space-y-2">
                             <label htmlFor="category">Author</label>
                             <input
+                                defaultValue={updateBook && updateBook.author}
                                 onChange={submitBook}
                                 required
                                 className="text-input"
@@ -59,6 +72,9 @@ const AddBook = () => {
                         <div className="space-y-2">
                             <label htmlFor="image">Image Url</label>
                             <input
+                                defaultValue={
+                                    updateBook && updateBook.thumbnail
+                                }
                                 onChange={submitBook}
                                 required
                                 className="text-input"
@@ -72,6 +88,9 @@ const AddBook = () => {
                             <div className="space-y-2">
                                 <label htmlFor="price">Price</label>
                                 <input
+                                    defaultValue={
+                                        updateBook && updateBook.price
+                                    }
                                     onChange={submitBook}
                                     required
                                     className="text-input"
@@ -84,6 +103,9 @@ const AddBook = () => {
                             <div className="space-y-2">
                                 <label htmlFor="quantity">Rating</label>
                                 <input
+                                    defaultValue={
+                                        updateBook && updateBook.rating
+                                    }
                                     onChange={submitBook}
                                     required
                                     className="text-input"
@@ -98,6 +120,9 @@ const AddBook = () => {
 
                         <div className="flex items-center">
                             <input
+                                defaultChecked={
+                                    updateBook && updateBook.featured
+                                }
                                 onChange={(e) =>
                                     (book.featured = e.target.checked)
                                 }

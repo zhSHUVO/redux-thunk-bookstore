@@ -1,16 +1,16 @@
 import { addBook } from "../action";
 
-const addBookReq = (addaddBookInfo) => {
+const addBookReq = (addBookInfo) => {
     return async (dispatch) => {
         const res = await fetch("http://localhost:9000/books", {
             method: "POST",
             body: JSON.stringify({
-                name: addaddBookInfo.name,
-                author: addaddBookInfo.author,
-                thumbnail: addaddBookInfo.thumbnail,
-                price: addaddBookInfo.price,
-                rating: addaddBookInfo.rating,
-                featured: addaddBookInfo.featured,
+                name: addBookInfo.name,
+                author: addBookInfo.author,
+                thumbnail: addBookInfo.thumbnail,
+                price: addBookInfo.price,
+                rating: addBookInfo.rating,
+                featured: addBookInfo.featured,
             }),
             headers: {
                 "Content-type": "application/json; charset=UTF-8",
