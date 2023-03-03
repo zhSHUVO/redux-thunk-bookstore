@@ -10,6 +10,7 @@ const BookCard = ({ book }) => {
     };
     const handleUpdate = (book) => {
         dispatch(update(book));
+        document.getElementById("submit").innerHTML = "Update Book";
     };
     return (
         <div>

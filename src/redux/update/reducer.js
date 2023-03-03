@@ -1,4 +1,4 @@
-import { UPDATEDATA } from "./actionTypes";
+import { REMOVESTATE, UPDATEDATA } from "./actionTypes";
 
 const initialState = {};
 
@@ -9,6 +9,9 @@ const updateReducer = (state = initialState, action) => {
                 ...state,
                 book: action.payload,
             };
+
+        case REMOVESTATE:
+            return {};
 
         default:
             return state;

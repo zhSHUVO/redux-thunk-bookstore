@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import addBookReq from "../redux/book/thunk/addBookReq";
 import updateBookReq from "../redux/book/thunk/updateBookReq";
+import { removeState } from "../redux/update/actions";
 
 const AddBook = () => {
     const dispatch = useDispatch();
     const [book, setBook] = useState();
 
     const updateBook = useSelector((state) => state.update.book);
-    if (updateBook) {
-        document.getElementById("submit").innerHTML = "Update";
-    }
 
     const submitBook = (event) => {
+        console.log(event);
         setBook({
             ...book,
             [event.target.name]: event.target.value,
@@ -24,6 +23,8 @@ const AddBook = () => {
         const addBookInfo = Object.assign(featured, book);
         if (updateBook) {
             dispatch(updateBookReq(book, updateBook.id));
+            dispatch(removeState());
+            document.getElementById("submit").innerHTML = "Add Book";
         } else {
             dispatch(addBookReq(addBookInfo));
         }
