@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import fetchBooksReq from "../redux/book/thunk/fetchBooksReq";
+import { status } from "../redux/filter/actions";
 import BookCard from "./BookCard";
 
 const BookList = () => {
@@ -19,12 +20,25 @@ const BookList = () => {
 
                     <div className="flex items-center space-x-4">
                         <button
+                            onClick={(e) =>
+                                dispatch(
+                                    status(e.target.innerText.toLowerCase())
+                                )
+                            }
                             className="filter-btn active-filter"
                             id="lws-filterAll"
                         >
                             All
                         </button>
-                        <button className="filter-btn" id="lws-filterFeatured">
+                        <button
+                            onClick={(e) =>
+                                dispatch(
+                                    status(e.target.innerText.toLowerCase())
+                                )
+                            }
+                            className="filter-btn"
+                            id="lws-filterFeatured"
+                        >
                             Featured
                         </button>
                     </div>
@@ -38,6 +52,11 @@ const BookList = () => {
                                       .includes(
                                           filters.searchTerm.toLowerCase()
                                       )
+                                : book
+                        )
+                        .filter((book) =>
+                            filters.status === "featured"
+                                ? book.featured === true
                                 : book
                         )
                         .map((book) => (

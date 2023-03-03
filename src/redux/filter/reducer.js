@@ -1,4 +1,4 @@
-import { SEARCH } from "./actionTypes";
+import { SEARCH, STATUSCHANGED } from "./actionTypes";
 
 const initialState = {
     status: "all",
@@ -11,6 +11,11 @@ const filterReducer = (state = initialState, action) => {
             return {
                 ...state,
                 searchTerm: action.payload,
+            };
+        case STATUSCHANGED:
+            return {
+                ...state,
+                status: action.payload,
             };
         default:
             return state;

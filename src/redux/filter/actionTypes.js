@@ -1,1 +1,2 @@
-export const SEARCH = "book/search"
+export const SEARCH = "filter/search";
+export const STATUSCHANGED = "filter/status";
